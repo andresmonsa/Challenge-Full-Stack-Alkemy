@@ -1,0 +1,19 @@
+{
+  "name": "challenge-ingreso",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andresmonsa/Challenge-Full-Stack-Alkemy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andresmonsa/Challenge-Full-Stack-Alkemy/issues"
+  },
+  "homepage": "https://github.com/andresmonsa/Challenge-Full-Stack-Alkemy#readme"
+}
