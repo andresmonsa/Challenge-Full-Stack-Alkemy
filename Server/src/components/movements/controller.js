@@ -10,23 +10,45 @@ const getAll = async () => {
           id: movement.id,
           concept: movement.concept,
           amount: movement.amount,
-          date: moment(movement.date).format('YYYY-MM-DD'),
+          date: moment(movement.createdAt).format('YYYY-MM-DD HH:mm'),
           type: movement.type,
           category: movement.category.name
         }
       ))
       .sort((a, b) => {
-        if (a.date < b.date) {
+        if (a.id < b.id) {
           return 1
         }
-        if (a.date > b.date) {
+        if (a.id > b.id) {
           return -1
         }
         return 0
       })
-  } catch (error) { return (error) }
+  } catch ({ message: error }) {
+    throw new Error(error)
+  }
+}
+
+const getLast = async () => {
+  try {
+    const lastMovements = await getAll()
+    return lastMovements
+      .splice(0, 10)
+  } catch ({ message: error }) {
+    throw new Error(error)
+  }
+}
+
+const addMovement = async (movement) => {
+  try {
+    return await store.addMovement(movement)
+  } catch ({ message: error }) {
+    throw new Error(error)
+  }
 }
 
 module.exports = {
-  getAll
+  getAll,
+  getLast,
+  addMovement
 }
