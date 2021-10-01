@@ -22,4 +22,10 @@ router.post('/', async (req, res) => {
     .catch(error => response.error(req, res, 401, error, 'Can´t add movement'))
 })
 
+router.get('/balance', async (req, res) => {
+  controller.getBalance(req.body)
+    .then(message => response.success(req, res, 201, message))
+    .catch(error => response.error(req, res, 401, error, 'Can´t add movement'))
+})
+
 module.exports = router

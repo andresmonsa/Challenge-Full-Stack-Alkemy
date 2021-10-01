@@ -39,6 +39,20 @@ const getLast = async () => {
   }
 }
 
+const getBalance = async () => {
+  try {
+    let balance = 0
+    const movements = await store.getAll()
+    movements.forEach(movement => {
+      if (movement.type === 'Income') balance = balance + movement.amount
+      else balance = balance - movement.amount
+    })
+    return balance
+  } catch ({ message: error }) {
+    throw new Error(error)
+  }
+}
+
 const addMovement = async (movement) => {
   try {
     return await store.addMovement(movement)
@@ -50,5 +64,6 @@ const addMovement = async (movement) => {
 module.exports = {
   getAll,
   getLast,
+  getBalance,
   addMovement
 }
