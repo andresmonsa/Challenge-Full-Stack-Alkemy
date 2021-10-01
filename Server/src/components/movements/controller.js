@@ -61,9 +61,19 @@ const addMovement = async (movement) => {
   }
 }
 
+const modifyMovement = async (movementID, body) => {
+  try {
+    const { concept, date, category, amount } = body
+    return await store.modifyMovement(movementID, concept, date, category, amount)
+  } catch ({ message: error }) {
+    throw new Error(error)
+  }
+}
+
 module.exports = {
   getAll,
   getLast,
   getBalance,
-  addMovement
+  addMovement,
+  modifyMovement
 }
