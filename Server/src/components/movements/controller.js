@@ -70,10 +70,19 @@ const modifyMovement = async (movementID, body) => {
   }
 }
 
+const deleteMovement = async (movementID) => {
+  try {
+    return await store.deleteMovement(movementID)
+  } catch ({ message: error }) {
+    throw new Error(error)
+  }
+}
+
 module.exports = {
   getAll,
   getLast,
   getBalance,
   addMovement,
-  modifyMovement
+  modifyMovement,
+  deleteMovement
 }

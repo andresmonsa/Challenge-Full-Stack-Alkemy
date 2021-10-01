@@ -60,8 +60,21 @@ const modifyMovement = async (movementID, concept, date, category, amount) => {
     throw new Error(error)
   }
 }
+
+const deleteMovement = async (id) => {
+  try {
+    const movement = await Movement.findByPk(id)
+    if (movement === null) throw new Error('Can´t find the movement')
+    else movement.destroy()
+
+    return `Movement ${id} has been deleted`
+  } catch ({ message: error }) {
+    throw new Error(error)
+  }
+}
 module.exports = {
   getAll,
   addMovement,
-  modifyMovement
+  modifyMovement,
+  deleteMovement
 }

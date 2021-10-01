@@ -7,28 +7,33 @@ router.get('/', async (req, res) => {
   if (req.query.type === 'last') {
     controller.getLast()
       .then(message => response.success(req, res, 200, message))
-      .catch(error => response.error(req, res, 404, error, 'Can´t get last movements'))
+      .catch(error => response.error(req, res, 404, error, 'Can´t get the last movements'))
   } else if (req.query.type === 'balance') {
     controller.getBalance(req.body)
       .then(message => response.success(req, res, 201, message))
-      .catch(error => response.error(req, res, 404, error, 'Can´t get balance'))
+      .catch(error => response.error(req, res, 404, error, 'Can´t get the balance'))
   } else {
     controller.getAll()
       .then(message => response.success(req, res, 200, message))
-      .catch(error => response.error(req, res, 404, error, 'Can´t get movements'))
+      .catch(error => response.error(req, res, 404, error, 'Can´t get the movements'))
   }
 })
 
 router.post('/', async (req, res) => {
   controller.addMovement(req.body)
     .then(message => response.success(req, res, 201, message))
-    .catch(error => response.error(req, res, 401, error, 'Can´t add movement'))
+    .catch(error => response.error(req, res, 400, error, 'Can´t add the movement'))
 })
 
 router.patch('/:movementID', async (req, res) => {
   controller.modifyMovement(req.params.movementID, req.body)
     .then(message => response.success(req, res, 201, message))
-    .catch(error => response.error(req, res, 401, error, 'Can´t modify movement'))
+    .catch(error => response.error(req, res, 400, error, 'Can´t modify the movement'))
+})
+router.delete('/:movementID', async (req, res) => {
+  controller.deleteMovement(req.params.movementID)
+    .then(message => response.success(req, res, 201, message))
+    .catch(error => response.error(req, res, 400, error, 'Can´t delete the movement'))
 })
 
 module.exports = router
