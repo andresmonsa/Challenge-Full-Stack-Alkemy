@@ -2,7 +2,7 @@ const { Category } = require('../../db')
 
 const getAll = async () => {
   try {
-    const categories = await Category.findAll()
+    const categories = await Category.findsAll()
     return categories
   } catch ({ message: error }) {
     throw new Error(error)
@@ -11,7 +11,7 @@ const getAll = async () => {
 
 const addCat = async (catName) => {
   try {
-    if (catName === '') throw new Error('Must provide a Name!😫')
+    if (catName === '') throw new Error('Must provide a Name!')
     const cat = await Category.findOne({
       where: {
         name: catName
