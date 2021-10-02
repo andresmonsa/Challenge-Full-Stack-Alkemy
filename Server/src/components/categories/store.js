@@ -2,7 +2,7 @@ const { Category } = require('../../db')
 
 const getAll = async () => {
   try {
-    const categories = await Category.findsAll()
+    const categories = await Category.findAll()
     return categories
   } catch ({ message: error }) {
     throw new Error(error)
