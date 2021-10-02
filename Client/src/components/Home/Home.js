@@ -30,12 +30,12 @@ const Home = () => {
       setCategories(await getCategories())
     }
     getData()
-    console.log(list)
+    // console.log(list)
   }, [])
 
   useEffect(() => {
-    let filtredByType
-    let filtredByCat
+    let filtredByType = []
+    let filtredByCat = []
 
     if (filters.type === 'all') {
       filtredByType = list
@@ -49,7 +49,7 @@ const Home = () => {
       filtredByCat = filtredByType.filter(movement => movement.category === filters.category)
     }
     setFiltredList(filtredByCat)
-    getSubtotal(filtredByCat)
+    if (filtredByCat) getSubtotal(filtredByCat)
   }, [filters.type, filters.category, list])
 
   const getLast = async () => {
@@ -115,8 +115,8 @@ const Home = () => {
         <Row style={{ Minheight: '3rem', marginTop: '0.8rem', marginBottom: '0.8rem' }} className={style.itemBox}>
           <Col><h5>Concept</h5></Col>
           <Col><h5>Amount</h5></Col>
-          <Col><h5>Date</h5></Col>
           <Col><h5>Type</h5></Col>
+          <Col><h5>Date</h5></Col>
           <Col><h5>Category</h5></Col>
         </Row>
 
@@ -125,8 +125,8 @@ const Home = () => {
             <Row style={{ Minheight: '3rem', marginTop: '0.8rem', marginBottom: '0.8rem' }} key={index} className={style.itemBox}>
               <Col>{mov.concept}</Col>
               <Col>{mov.amount}</Col>
-              <Col>{mov.date}</Col>
               <Col>{mov.type}</Col>
+              <Col>{mov.date}</Col>
               <Col>{mov.category}</Col>
 
             </Row>
@@ -134,7 +134,7 @@ const Home = () => {
         })}
 
         <Row style={{ Minheight: '3rem', marginTop: '1rem', marginBottom: '0.8rem', marginRight: '2.5rem', textAlign: 'right' }}>
-          {console.log(filters)}
+          {/* {console.log(filters)} */}
           {filters.type !== 'all' || filters.category !== 'all' ? <Col>SubTotal: ${subTotal}</Col> : null}
 
           <Col>Total: ${balance}</Col>
