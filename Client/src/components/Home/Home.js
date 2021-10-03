@@ -1,16 +1,14 @@
-import { Row, Col, InputGroup, Form, Container } from 'react-bootstrap'
+
 import { useState, useEffect } from 'react'
 import {
   getCategories,
   getAllMovements,
   getLastMovements,
-  getBalance,
-  addMovement,
-  editMovement,
-  deleteMovement
+  getBalance
 } from '../functions/Index'
-import style from './Home.module.css'
+
 import { toastCustom } from '../common/toastify'
+import HomeView from './HomeView'
 
 const Home = () => {
   const [list, setList] = useState()
@@ -22,6 +20,7 @@ const Home = () => {
   })
   const [filtredList, setFiltredList] = useState(list)
   const [subTotal, setSubTotal] = useState(balance)
+  const [addModalShow, setAddModalShow] = useState(false)
 
   useEffect(() => {
     const getData = async () => {
@@ -30,7 +29,6 @@ const Home = () => {
       setCategories(await getCategories())
     }
     getData()
-    // console.log(list)
   }, [])
 
   useEffect(() => {
@@ -53,8 +51,12 @@ const Home = () => {
   }, [filters.type, filters.category, list])
 
   const getLast = async () => {
-    setList(await getLastMovements())
-    toastCustom('Showing last 10 movemets', 'success', 1500, 'bottom-right')
+    try {
+      setList(await getLastMovements())
+      toastCustom('Showing last 10 movemets', 'success', 2000, 'bottom-right')
+    } catch (e) {
+      toastCustom('Opps, somethings happens!😮', 'error', 2000, 'bottom-right')
+    }
   }
 
   const getAll = async () => {
@@ -75,73 +77,27 @@ const Home = () => {
     return setSubTotal(balance)
   }
 
+  const handleClose = () => setAddModalShow(false)
+
   return (
     <>
-      <Container>
-        <Row style={{ Minheight: '3rem', marginTop: '0.8rem', marginBottom: '0.8rem' }}>
-          <Col onClick={() => getLast()}>Last movements</Col>
-          <Col onClick={() => getAll()}>All movements</Col>
-          <Col>Add movement</Col>
-        </Row>
-        <Row>
-          <Col>
-            {/* TYPE */}
-            <InputGroup className='mb-3'>
-              <InputGroup.Text>Type:</InputGroup.Text>
-              <Form.Control as='select' name='type' placeholder='Filter by' onChange={(event) => handleFilterChange(event.target.name, event.target.value)}>
-                <option value='all'>All</option>
-                <option value='Outcome'>Outcome</option>
-                <option value='Income'>Income</option>
-              </Form.Control>
-            </InputGroup>
-          </Col>
-          <Col>
-            {/* CATEGORY */}
-            <InputGroup className='mb-3'>
-              <InputGroup.Text>Category:</InputGroup.Text>
-              <Form.Control as='select' name='category' placeholder='Filter by' onChange={(event) => handleFilterChange(event.target.name, event.target.value)}>
-                <option value='all' key='all'>All</option>
-                {categories?.map((cat, index) => {
-                  return (
-                    <option value={cat} key={index}>{cat}</option>
-                  )
-                })}
-              </Form.Control>
-            </InputGroup>
-          </Col>
-        </Row>
+      <HomeView
+        getAll={getAll}
+        getLast={getLast}
+        setAddModalShow={setAddModalShow}
+        addModalShow={addModalShow}
+        handleClose={handleClose}
+        filters={filters}
+        balance={balance}
+        setBalance={setBalance}
+        setList={setList}
+        handleFilterChange={handleFilterChange}
+        categories={categories}
+        filtredList={filtredList}
+        subTotal={subTotal}
 
-        {/* {console.log(filtredList)} */}
-        <Row style={{ Minheight: '3rem', marginTop: '0.8rem', marginBottom: '0.8rem' }} className={style.itemBox}>
-          <Col><h5>Concept</h5></Col>
-          <Col><h5>Amount</h5></Col>
-          <Col><h5>Type</h5></Col>
-          <Col><h5>Date</h5></Col>
-          <Col><h5>Category</h5></Col>
-        </Row>
+      />
 
-        {filtredList?.map((mov, index) => {
-          return (
-            <Row style={{ Minheight: '3rem', marginTop: '0.8rem', marginBottom: '0.8rem' }} key={index} className={style.itemBox}>
-              <Col>{mov.concept}</Col>
-              <Col>{mov.amount}</Col>
-              <Col>{mov.type}</Col>
-              <Col>{mov.date}</Col>
-              <Col>{mov.category}</Col>
-
-            </Row>
-          )
-        })}
-
-        <Row style={{ Minheight: '3rem', marginTop: '1rem', marginBottom: '0.8rem', marginRight: '2.5rem', textAlign: 'right' }}>
-          {/* {console.log(filters)} */}
-          {filters.type !== 'all' || filters.category !== 'all' ? <Col>SubTotal: ${subTotal}</Col> : null}
-
-          <Col>Total: ${balance}</Col>
-
-        </Row>
-
-      </Container>
     </>
   )
 }
