@@ -63,11 +63,6 @@ const Home = () => {
     setList(await getAllMovements())
     toastCustom('Showing all movemets', 'success', 1500, 'bottom-right')
   }
-
-  const handleFilterChange = (eventName, eventValue) => {
-    setFilters(prev => ({ ...prev, [eventName]: eventValue }))
-  }
-
   const getSubtotal = (movements) => {
     let balance = 0
     movements.forEach(movement => {
@@ -75,6 +70,10 @@ const Home = () => {
       else balance = balance - movement.amount
     })
     return setSubTotal(balance)
+  }
+
+  const handleFilterChange = (eventName, eventValue) => {
+    setFilters(prev => ({ ...prev, [eventName]: eventValue }))
   }
 
   const handleClose = () => setAddModalShow(false)
@@ -95,9 +94,7 @@ const Home = () => {
         categories={categories}
         filtredList={filtredList}
         subTotal={subTotal}
-
       />
-
     </>
   )
 }

@@ -21,14 +21,14 @@ export const getBalance = async () => {
   return response.data
 }
 
-export const addMovement = (data) => {
+export const addNewMovement = (data) => {
   try {
     axios.post(`${ApiURL}/movements/`, data)
   } catch (error) { console.log(error) }
 }
-export const editMovement = (movementID, data) => {
+export const editMovement = async (movementID, data) => {
   try {
-    axios.patch(`${ApiURL}/movements/${movementID}`, data)
+    await axios.patch(`${ApiURL}/movements/${movementID}`, data)
   } catch (error) { console.log(error) }
 }
 

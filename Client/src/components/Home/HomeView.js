@@ -1,6 +1,7 @@
 import { Row, Col, InputGroup, Form, Container, Button } from 'react-bootstrap'
 import AddMovement from '../AddMovement/AddMovement'
-import style from './Home.module.css'
+import Movement from '../Movement/Movement'
+import style from './HomeView.module.css'
 
 const HomeView = ({ getLast, getAll, setAddModalShow, addModalShow, handleFilterChange, categories, setBalance, balance, filtredList, filters, setList, handleClose, subTotal }) => {
   return (
@@ -45,17 +46,13 @@ const HomeView = ({ getLast, getAll, setAddModalShow, addModalShow, handleFilter
         <Col><h5>Type</h5></Col>
         <Col><h5>Date</h5></Col>
         <Col><h5>Category</h5></Col>
+        <Col><h5>Tools</h5></Col>
       </Row>
 
       {filtredList?.map((mov, index) => {
         return (
           <Row style={{ Minheight: '3rem', marginTop: '0.8rem', marginBottom: '0.8rem' }} key={index} className={style.itemBox}>
-            <Col>{mov.concept}</Col>
-            <Col>{mov.amount}</Col>
-            <Col>{mov.type}</Col>
-            <Col>{mov.date}</Col>
-            <Col>{mov.category}</Col>
-
+            <Movement mov={mov} index={index} setList={setList} categories={categories} setBalance={setBalance} />
           </Row>
         )
       })}

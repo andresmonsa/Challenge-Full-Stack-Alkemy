@@ -2,7 +2,7 @@ import { Button, Modal, InputGroup, Row, Col, Form } from 'react-bootstrap'
 import { useState } from 'react'
 import { toastCustom } from '../common/toastify'
 import moment from 'moment'
-import { addMovement, getAllMovements, getBalance } from '../functions/Index'
+import { addNewMovement, getAllMovements, getBalance } from '../functions/Index'
 
 const AddMovement = ({ categories, addModalShow, handleClose, setList, setBalance }) => {
   const [form, setForm] = useState({
@@ -17,7 +17,7 @@ const AddMovement = ({ categories, addModalShow, handleClose, setList, setBalanc
   }
 
   const submit = async () => {
-    await addMovement(form)
+    await addNewMovement(form)
     setTimeout(async () => {
       setList(await getAllMovements())
       setBalance(await getBalance())

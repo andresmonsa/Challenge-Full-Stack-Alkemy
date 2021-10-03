@@ -10,16 +10,16 @@ const getAll = async () => {
           id: movement.id,
           concept: movement.concept,
           amount: movement.amount,
-          date: moment(movement.createdAt).format('YYYY-MM-DD HH:mm'),
+          date: moment(movement.date).format('YYYY-MM-DD HH:mm'),
           type: movement.type,
           category: movement.category.name
         }
       ))
       .sort((a, b) => {
-        if (a.id < b.id) {
+        if (a.date < b.date) {
           return 1
         }
-        if (a.id > b.id) {
+        if (a.date > b.date) {
           return -1
         }
         return 0
