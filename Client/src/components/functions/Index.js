@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ApiURL } from '../../../config'
+import { ApiURL } from '../../config'
 
 export const getCategories = async () => {
   const response = await axios.get(`${ApiURL}/categories`)
