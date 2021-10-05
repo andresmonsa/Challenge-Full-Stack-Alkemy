@@ -3,12 +3,25 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import { BrowserRouter as Router } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { PersistGate } from 'redux-persist/integration/react'
+import { Provider } from 'react-redux'
+import Store from './redux/store/index'
 
+const { persistor, store } = Store
+// persistor.purge()
 ReactDOM.render(
-  <>    <App />
-    <ToastContainer />
+  <>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router>
+          <App />
+          <ToastContainer />
+        </Router>
+      </PersistGate>
+    </Provider>
   </>,
   document.getElementById('root')
 )

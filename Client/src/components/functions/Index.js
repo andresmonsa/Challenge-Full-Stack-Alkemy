@@ -37,3 +37,12 @@ export const deleteMovement = (movementID) => {
     axios.delete(`${ApiURL}/movements/${movementID}`)
   } catch (error) { console.log(error) }
 }
+
+export const login = async (userData) => {
+  try {
+    const logged = await axios.post(`${ApiURL}/users/login`, userData)
+    return logged.data
+  } catch ({ message: error }) {
+    throw new Error(error)
+  }
+}

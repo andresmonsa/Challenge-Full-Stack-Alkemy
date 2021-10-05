@@ -9,6 +9,8 @@ import {
 
 import { toastCustom } from '../common/toastify'
 import HomeView from './HomeView'
+import { useDispatch } from 'react-redux'
+import { setLogged } from '../../redux/actions/userActions'
 
 const Home = () => {
   const [list, setList] = useState()
@@ -21,6 +23,7 @@ const Home = () => {
   const [filtredList, setFiltredList] = useState(list)
   const [subTotal, setSubTotal] = useState(balance)
   const [addModalShow, setAddModalShow] = useState(false)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const getData = async () => {
@@ -78,6 +81,8 @@ const Home = () => {
 
   const handleClose = () => setAddModalShow(false)
 
+  const closeSesion = () => (dispatch(setLogged(false)))
+
   return (
     <>
       <HomeView
@@ -94,6 +99,7 @@ const Home = () => {
         categories={categories}
         filtredList={filtredList}
         subTotal={subTotal}
+        closeSesion={closeSesion}
       />
     </>
   )

@@ -3,16 +3,17 @@ import AddMovement from '../AddMovement/AddMovement'
 import Movement from '../Movement/Movement'
 import style from './HomeView.module.css'
 
-const HomeView = ({ getLast, getAll, setAddModalShow, addModalShow, handleFilterChange, categories, setBalance, balance, filtredList, filters, setList, handleClose, subTotal }) => {
+const HomeView = ({ getLast, getAll, setAddModalShow, addModalShow, handleFilterChange, categories, setBalance, balance, filtredList, filters, setList, handleClose, subTotal, closeSesion }) => {
   return (
     <Container>
       <Row style={{ Minheight: '3rem', marginTop: '0.8rem', marginBottom: '0.8rem' }}>
         <Col> <Button variant='primary' onClick={() => getLast()}>Last movements</Button>  </Col>
         <Col>  <Button variant='primary' onClick={() => getAll()}>All movements</Button></Col>
         <Col>  <Button variant='primary' onClick={() => setAddModalShow(true)}>Add a new movement</Button></Col>
+        <Col>   <Button className='ml-5' variant='danger' onClick={() => closeSesion()}>Close Sesion</Button></Col>
       </Row>
-      <Row>
 
+      <Row>
         <Col>
           {/* TYPE */}
           <InputGroup className='mb-3'>
