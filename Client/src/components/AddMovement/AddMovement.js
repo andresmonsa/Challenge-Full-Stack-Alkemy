@@ -3,14 +3,17 @@ import { useState } from 'react'
 import { toastCustom } from '../common/toastify'
 import moment from 'moment'
 import { addNewMovement, getAllMovements, getBalance } from '../functions/Index'
+import { useSelector } from 'react-redux'
 
 const AddMovement = ({ categories, addModalShow, handleClose, setList, setBalance }) => {
+  const userID = useSelector(state => state.logged.id)
   const [form, setForm] = useState({
     concept: '',
     date: moment(new Date()).format('YYYY-MM-DD HH:mm'),
     category: '',
     amount: 0,
-    type: ''
+    type: '',
+    userID
   })
   const handleChange = (eventName, eventValue) => {
     setForm(prev => ({ ...prev, [eventName]: eventValue }))
@@ -19,8 +22,8 @@ const AddMovement = ({ categories, addModalShow, handleClose, setList, setBalanc
   const submit = async () => {
     await addNewMovement(form)
     setTimeout(async () => {
-      setList(await getAllMovements())
-      setBalance(await getBalance())
+      setList(await getAllMovements(userID))
+      setBalance(await getBalance(userID))
     }, 2000)
     handleClose()
     toastCustom('Movement added', 'success', 4000, 'bottom-right')

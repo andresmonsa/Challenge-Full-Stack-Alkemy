@@ -1,8 +1,9 @@
-const { Movement, Category } = require('../../db')
+const { Movement, Category, User } = require('../../db')
 
-const getAll = async () => {
+const getAll = async (userID) => {
   try {
     const movements = await Movement.findAll({
+      where: { userId: userID },
       include: {
         model: Category,
         attributes: ['name']
@@ -14,7 +15,8 @@ const getAll = async () => {
   }
 }
 
-const addMovement = async ({ concept, category, amount, type }) => {
+const addMovement = async ({ concept, category, amount, type, userID }) => {
+  console.log(userID)
   try {
     const cat = await Category.findOne({
       where: {
@@ -32,7 +34,11 @@ const addMovement = async ({ concept, category, amount, type }) => {
       type
     })
 
-    cat.addMovement(newMovement)
+    const user = await User.findByPk(userID)
+
+    await newMovement.setUser(user)
+
+    await cat.addMovement(newMovement)
 
     return ('Movement was added')
   } catch ({ message: error }) {

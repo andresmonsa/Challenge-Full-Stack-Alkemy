@@ -3,17 +3,18 @@ const router = express.Router()
 const controller = require('./controller')
 const response = require('../responses')
 
-router.get('/', async (req, res) => {
+router.get('/:id', async (req, res) => {
   if (req.query.type === 'last') {
-    controller.getLast()
+    console.log(req.params.id)
+    controller.getLast(req.params.id)
       .then(message => response.success(req, res, 200, message))
       .catch(error => response.error(req, res, 404, error, 'Can´t get the last movements'))
   } else if (req.query.type === 'balance') {
-    controller.getBalance(req.body)
+    controller.getBalance(req.params.id)
       .then(message => response.success(req, res, 201, message))
       .catch(error => response.error(req, res, 404, error, 'Can´t get the balance'))
   } else {
-    controller.getAll()
+    controller.getAll(req.params.id)
       .then(message => response.success(req, res, 200, message))
       .catch(error => response.error(req, res, 404, error, 'Can´t get the movements'))
   }

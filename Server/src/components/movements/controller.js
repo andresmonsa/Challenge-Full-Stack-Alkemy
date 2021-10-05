@@ -1,9 +1,9 @@
 const store = require('./store')
 const moment = require('moment')
 
-const getAll = async () => {
+const getAll = async (userID) => {
   try {
-    const allMovements = await store.getAll()
+    const allMovements = await store.getAll(userID)
     return allMovements
       .map(movement => (
         {
@@ -29,9 +29,9 @@ const getAll = async () => {
   }
 }
 
-const getLast = async () => {
+const getLast = async (userID) => {
   try {
-    const lastMovements = await getAll()
+    const lastMovements = await getAll(userID)
     return lastMovements
       .splice(0, 10)
   } catch ({ message: error }) {
@@ -39,10 +39,10 @@ const getLast = async () => {
   }
 }
 
-const getBalance = async () => {
+const getBalance = async (userID) => {
   try {
     let balance = 0
-    const movements = await store.getAll()
+    const movements = await store.getAll(userID)
     movements.forEach(movement => {
       if (movement.type === 'Income') balance = balance + movement.amount
       else balance = balance - movement.amount

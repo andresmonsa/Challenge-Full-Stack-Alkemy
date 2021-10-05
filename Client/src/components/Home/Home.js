@@ -9,7 +9,7 @@ import {
 
 import { toastCustom } from '../common/toastify'
 import HomeView from './HomeView'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setLogged } from '../../redux/actions/userActions'
 
 const Home = () => {
@@ -24,11 +24,13 @@ const Home = () => {
   const [subTotal, setSubTotal] = useState(balance)
   const [addModalShow, setAddModalShow] = useState(false)
   const dispatch = useDispatch()
+  const userID = useSelector(state => state.logged.id)
 
   useEffect(() => {
     const getData = async () => {
-      setList(await getAllMovements())
-      setBalance(await getBalance())
+      console.log(userID, 'DATA')
+      setList(await getAllMovements(userID))
+      setBalance(await getBalance(userID))
       setCategories(await getCategories())
     }
     getData()
@@ -55,7 +57,7 @@ const Home = () => {
 
   const getLast = async () => {
     try {
-      setList(await getLastMovements())
+      setList(await getLastMovements(userID))
       toastCustom('Showing last 10 movemets', 'success', 2000, 'bottom-right')
     } catch (e) {
       toastCustom('Opps, somethings happens!😮', 'error', 2000, 'bottom-right')
@@ -63,7 +65,7 @@ const Home = () => {
   }
 
   const getAll = async () => {
-    setList(await getAllMovements())
+    setList(await getAllMovements(userID))
     toastCustom('Showing all movemets', 'success', 1500, 'bottom-right')
   }
   const getSubtotal = (movements) => {
