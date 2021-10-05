@@ -49,6 +49,7 @@ export const login = async (userData) => {
 }
 
 export const signUp = async (userData) => {
+  console.log(userData, 'data')
   try {
     const logged = await axios.post(`${ApiURL}/users/`, userData)
     return logged.data

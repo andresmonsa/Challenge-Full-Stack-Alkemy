@@ -20,8 +20,8 @@ const DeleteMovementModal = ({ addModalShow, handleClose, id, setList, setBalanc
       </Modal.Header>
 
       <Modal.Body>
-        <Button variant='secondary' onClick={() => { handleClose() }}>Close</Button>
-        <Button variant='danger' onClick={() => { delMovement(id) }}>Delete</Button>
+        <Button variant='secondary' className='m-2' onClick={() => { handleClose() }}>Close</Button>
+        <Button variant='danger' className='m-2' onClick={() => { delMovement(id) }}>Delete</Button>
       </Modal.Body>
 
     </Modal>

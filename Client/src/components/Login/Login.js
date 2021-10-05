@@ -43,16 +43,25 @@ const Login = () => {
           <Form.Group className='mb-3' controlId='formBasicPassword'>
             <Form.Control type='password' placeholder='Password' name='password' />
           </Form.Group>
-          <Button variant='primary' type='submit' onClick={(e) => onSubmit(e)}>
-            Submit
-          </Button>
+          {form.email === '' || form.password === ''
+            ? (
+              <Button variant='primary' type='submit' disabled onClick={(e) => onSubmit(e)}>
+                Login
+              </Button>
+              )
+            : (
+              <Button variant='primary' type='submit' onClick={(e) => onSubmit(e)}>
+                Login
+              </Button>
+              )}
+
           <hr />
           <Form.Label>For got your password?</Form.Label>
         </Form>
       </Container>
       <Container className='text-center'>
         <Button variant='success' onClick={() => { addModalShow() }}>
-          Create Account
+          Sign Up
         </Button>
         <SignUp handleClose={handleClose} modalShow={modalShow} />
       </Container>

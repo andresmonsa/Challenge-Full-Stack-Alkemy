@@ -29,6 +29,7 @@ router.post('/login', [
   check('password', 'Password is required and must be more than 6 letters').isLength({ min: 6 }).notEmpty(),
   validation
 ], async (req, res) => {
+  console.log(req.body)
   const email = req.body.email
   const password = req.body.password
   controller.login(email, password)
@@ -39,6 +40,9 @@ router.post('/login', [
     .catch(e => response.error(req, res, 400, e.message, 'No session'))
 })
 
+// router.get('/', async (req, res) => {
+
+// })
 // jwt.verify(req.token, SECRET, (error, authData) => {
 //   if (error) {
 //     res.sendStatus(403)
