@@ -25,12 +25,12 @@ const Home = () => {
   const [addModalShow, setAddModalShow] = useState(false)
   const dispatch = useDispatch()
   const userID = useSelector(state => state.logged.id)
-
+  const token = useSelector(state => state.logged.token)
+  // console.log(token)
   useEffect(() => {
     const getData = async () => {
-      console.log(userID, 'DATA')
-      setList(await getAllMovements(userID))
-      setBalance(await getBalance(userID))
+      setList(await getAllMovements(userID, token))
+      setBalance(await getBalance(userID, token))
       setCategories(await getCategories())
     }
     getData()
@@ -57,7 +57,7 @@ const Home = () => {
 
   const getLast = async () => {
     try {
-      setList(await getLastMovements(userID))
+      setList(await getLastMovements(userID, token))
       toastCustom('Showing last 10 movemets', 'success', 2000, 'bottom-right')
     } catch (e) {
       toastCustom('Opps, somethings happens!😮', 'error', 2000, 'bottom-right')
@@ -65,7 +65,7 @@ const Home = () => {
   }
 
   const getAll = async () => {
-    setList(await getAllMovements(userID))
+    setList(await getAllMovements(userID, token))
     toastCustom('Showing all movemets', 'success', 1500, 'bottom-right')
   }
   const getSubtotal = (movements) => {

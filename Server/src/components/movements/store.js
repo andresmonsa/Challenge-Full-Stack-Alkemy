@@ -16,7 +16,6 @@ const getAll = async (userID) => {
 }
 
 const addMovement = async ({ concept, category, amount, type, userID }) => {
-  console.log(userID)
   try {
     const cat = await Category.findOne({
       where: {

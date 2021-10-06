@@ -3,9 +3,6 @@ const router = express.Router()
 const controller = require('./controller')
 const { check } = require('express-validator')
 const response = require('../responses')
-// const jwt = require('jsonwebtoken')
-// const { SECRET } = process.env
-const { verifyToken } = require('../middlewares/verifyToken')
 const { validationEmail } = require('../middlewares/dbValidators')
 const validation = require('../middlewares/validation')
 
@@ -29,12 +26,10 @@ router.post('/login', [
   check('password', 'Password is required and must be more than 6 letters').isLength({ min: 6 }).notEmpty(),
   validation
 ], async (req, res) => {
-  console.log(req.body)
   const email = req.body.email
   const password = req.body.password
   controller.login(email, password)
     .then(message => {
-    // res.cookie('nToken', message.token, { maxAge: 900000, httpOnly: true })
       response.success(req, res, 201, message)
     })
     .catch(e => response.error(req, res, 400, e.message, 'No session'))

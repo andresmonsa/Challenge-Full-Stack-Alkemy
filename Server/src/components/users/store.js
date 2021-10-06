@@ -9,7 +9,7 @@ const newUser = async ({ name, lastName, email, password }) => {
       email,
       password
     })
-    const token = await tokenGenerator(user)
+    const token = await tokenGenerator(user.email)
     return {
       user,
       token
@@ -20,14 +20,13 @@ const newUser = async ({ name, lastName, email, password }) => {
 }
 
 const login = async (email, password) => {
-  // console.log(email)
   try {
     const user = await User.findOne({
       where: {
         email
       }
     })
-    const token = await tokenGenerator(user)
+    const token = await tokenGenerator(user.email)
     if (user === null) throw new Error('No session')
     return {
       user,

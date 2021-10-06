@@ -6,36 +6,60 @@ export const getCategories = async () => {
   return response.data
 }
 
-export const getAllMovements = async (userID) => {
-  console.log(userID, 'USERID')
-  const response = await axios.get(`${ApiURL}/movements/${userID}`)
+export const getAllMovements = async (userID, token) => {
+  const response = await axios.get(`${ApiURL}/movements/${userID}`, {
+    headers: {
+      token
+    }
+  })
   return response.data
 }
 
-export const getLastMovements = async (userID) => {
-  const response = await axios.get(`${ApiURL}/movements/${userID}?type=last`)
+export const getLastMovements = async (userID, token) => {
+  const response = await axios.get(`${ApiURL}/movements/${userID}?type=last`, {
+    headers: {
+      token
+    }
+  })
   return response.data
 }
 
-export const getBalance = async (userID) => {
-  const response = await axios.get(`${ApiURL}/movements/${userID}?type=balance`)
+export const getBalance = async (userID, token) => {
+  const response = await axios.get(`${ApiURL}/movements/${userID}?type=balance`, {
+    headers: {
+      token
+    }
+  })
   return response.data
 }
 
-export const addNewMovement = (data) => {
+export const addNewMovement = (data, token) => {
   try {
-    axios.post(`${ApiURL}/movements/`, data)
+    axios.post(`${ApiURL}/movements/`, data, {
+      headers: {
+        token
+      }
+    })
   } catch (error) { console.log(error) }
 }
-export const editMovement = async (movementID, data) => {
+
+export const editMovement = async (movementID, data, token) => {
   try {
-    await axios.patch(`${ApiURL}/movements/${movementID}`, data)
+    await axios.patch(`${ApiURL}/movements/${movementID}`, data, {
+      headers: {
+        token
+      }
+    })
   } catch (error) { console.log(error) }
 }
 
-export const deleteMovement = (movementID) => {
+export const deleteMovement = (movementID, token) => {
   try {
-    axios.delete(`${ApiURL}/movements/${movementID}`)
+    axios.delete(`${ApiURL}/movements/${movementID}`, {
+      headers: {
+        token
+      }
+    })
   } catch (error) { console.log(error) }
 }
 

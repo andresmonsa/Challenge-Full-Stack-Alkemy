@@ -3,10 +3,13 @@ import { useState } from 'react'
 import moment from 'moment'
 import { toastCustom } from '../common/toastify'
 import { VscEdit, VscTrash } from 'react-icons/vsc'
+import { useSelector } from 'react-redux'
 import { getAllMovements, editMovement, getBalance } from '../functions/Index'
 import DeleteMovementModal from './DeleteMovementModal'
 
 const Movement = ({ mov, setList, categories, setBalance }) => {
+  const token = useSelector(state => state.logged.token)
+  const userID = useSelector(state => state.logged.id)
   const [form, setForm] = useState({
     concept: mov.concept,
     date: mov.date,
@@ -21,10 +24,10 @@ const Movement = ({ mov, setList, categories, setBalance }) => {
   }
 
   const submit = async () => {
-    await editMovement(mov.id, form)
+    await editMovement(mov.id, form, token)
     setTimeout(async () => {
-      setList(await getAllMovements())
-      setBalance(await getBalance())
+      setList(await getAllMovements(userID, token))
+      setBalance(await getBalance(userID, token))
     }, 500)
     setEdit(false)
     toastCustom('Movement edited', 'success', 2000, 'bottom-right')

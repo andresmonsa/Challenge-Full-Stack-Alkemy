@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 
 const AddMovement = ({ categories, addModalShow, handleClose, setList, setBalance }) => {
   const userID = useSelector(state => state.logged.id)
+  const token = useSelector(state => state.logged.token)
   const [form, setForm] = useState({
     concept: '',
     date: moment(new Date()).format('YYYY-MM-DD HH:mm'),
@@ -20,10 +21,10 @@ const AddMovement = ({ categories, addModalShow, handleClose, setList, setBalanc
   }
 
   const submit = async () => {
-    await addNewMovement(form)
+    await addNewMovement(form, token)
     setTimeout(async () => {
-      setList(await getAllMovements(userID))
-      setBalance(await getBalance(userID))
+      setList(await getAllMovements(userID, token))
+      setBalance(await getBalance(userID, token))
     }, 2000)
     handleClose()
     toastCustom('Movement added', 'success', 4000, 'bottom-right')

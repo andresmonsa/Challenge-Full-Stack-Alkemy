@@ -1,13 +1,16 @@
 import { Button, Modal } from 'react-bootstrap'
 import { deleteMovement, getAllMovements, getBalance } from '../functions/Index'
 import { toastCustom } from '../common/toastify'
+import { useSelector } from 'react-redux'
 
 const DeleteMovementModal = ({ addModalShow, handleClose, id, setList, setBalance }) => {
+  const token = useSelector(state => state.logged.token)
+  const userID = useSelector(state => state.logged.id)
   const delMovement = async () => {
-    deleteMovement(id)
+    deleteMovement(id, token)
     setTimeout(async () => {
-      setList(await getAllMovements())
-      setBalance(await getBalance())
+      setList(await getAllMovements(userID, token))
+      setBalance(await getBalance(userID, token))
     }, 500)
     toastCustom('Movement deleted', 'error', 2000, 'bottom-right')
 
