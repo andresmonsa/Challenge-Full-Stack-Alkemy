@@ -7,10 +7,10 @@ const jwt = require('jsonwebtoken')
 
 router.get('/:id', async (req, res, next) => {
   const token = req.header('token')
+  if (!token) return res.status(403).send('Without Token')
   jwt.verify(token, process.env.SECRET, (error) => {
     if (error) {
-      console.log('sin token')
-      return res.sendStatus(403)
+      return res.status(403).send('Invalid Token')
     } else {
       if (req.query.type === 'last') {
         controller.getLast(req.params.id, token)
@@ -31,10 +31,10 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res) => {
   const token = req.header('token')
+  if (!token) return res.status(403).send('Without Token')
   jwt.verify(token, process.env.SECRET, (error) => {
     if (error) {
-      console.log('sin token')
-      return res.sendStatus(403)
+      return res.status(403).send('Invalid Token')
     } else {
       controller.addMovement(req.body)
         .then(message => response.success(req, res, 201, message))
@@ -45,10 +45,10 @@ router.post('/', async (req, res) => {
 
 router.patch('/:movementID', async (req, res) => {
   const token = req.header('token')
+  if (!token) return res.status(403).send('Without Token')
   jwt.verify(token, process.env.SECRET, (error) => {
     if (error) {
-      console.log('sin token')
-      return res.sendStatus(403)
+      return res.status(403).send('Invalid Token')
     } else {
       controller.modifyMovement(req.params.movementID, req.body)
         .then(message => response.success(req, res, 201, message))
@@ -59,10 +59,10 @@ router.patch('/:movementID', async (req, res) => {
 
 router.delete('/:movementID', async (req, res) => {
   const token = req.header('token')
+  if (!token) return res.status(403).send('Without Token')
   jwt.verify(token, process.env.SECRET, (error) => {
     if (error) {
-      console.log('sin token')
-      return res.sendStatus(403)
+      return res.status(403).send('Invalid Token')
     } else {
       controller.deleteMovement(req.params.movementID)
         .then(message => response.success(req, res, 201, message))
